@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
+                 xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity
+      Id="XRTVMPostBuild.RISVM.1"
+      Version="1.0.0"
+      Language="en-US"
+      Publisher="RISVM Team" />
+    <DisplayName>XRTVM Post-Build Protector</DisplayName>
+    <Description xml:space="preserve">
+      Automatically runs xrtvm-cli compile on the project output after a successful build,
+      converting the native PE executable to an XRTVM-protected .xvm container.
+    </Description>
+    <MoreInfo>https://github.com/risvm/xrtvm</MoreInfo>
+    <License>LICENSE.txt</License>
+    <Tags>security, protection, obfuscation, xrtvm</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Professional" Version="[17.0,)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[17.0,)" />
+  </Installation>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="XRTVMExtension" Path="|XRTVMExtension|" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate.CSharp" d:Source="Project" d:ProjectName="XRTVMExtension" Path="|XRTVMExtension|" />
+  </Assets>
+</PackageManifest>

@@ -1,0 +1,19 @@
+// Grok Desktop Win32 resources: application icon.
+#include "resource.h"
+
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif
+
+// Icon with the lowest ID value is placed first so that the application icon
+// stays consistent on all systems.
+IDI_GROKDESKTOP ICON "app.ico"
+IDI_SMALL ICON "app.ico"
+
+#endif

@@ -1,0 +1,60 @@
+<!--
+  XRTVM.targets — MSBuild integration for XRTVM post-build protection.
+
+  Usage in project file:
+    <Import Project="$(XRTVMSdkPath)\XRTVM.targets" />
+    <PropertyGroup>
+      <XRTVMProtect>true</XRTVMProtect>
+      <XRTVMKeyPath>$(SolutionDir)keys\signing.key</XRTVMKeyPath>
+      <XRTVMPolicyJson>{}</XRTVMPolicyJson>
+    </PropertyGroup>
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Default property values -->
+  <PropertyGroup>
+    <XRTVMProtect Condition="'$(XRTVMProtect)' == ''">false</XRTVMProtect>
+    <XRTVMCliPath Condition="'$(XRTVMCliPath)' == ''">xrtvm-cli</XRTVMCliPath>
+    <XRTVMKeyPath Condition="'$(XRTVMKeyPath)' == ''"></XRTVMKeyPath>
+    <XRTVMPolicyJson Condition="'$(XRTVMPolicyJson)' == ''">{}</XRTVMPolicyJson>
+    <XRTVMOutputSuffix Condition="'$(XRTVMOutputSuffix)' == '">.xvm</XRTVMOutputSuffix>
+  </PropertyGroup>
+
+  <!--
+    XrtvmProtect target: runs xrtvm-cli compile after the standard Build target.
+    Only runs when XRTVMProtect=true and the output file exists.
+  -->
+  <Target Name="XrtvmProtect"
+          AfterTargets="Build"
+          Condition="'$(XRTVMProtect)' == 'true' AND '$(XRTVMKeyPath)' != ''">
+
+    <Message Text="[XRTVM] Protecting $(TargetPath) → $(TargetPath)$(XRTVMOutputSuffix)" Importance="High" />
+
+    <Exec
+      Command="&quot;$(XRTVMCliPath)&quot; compile --input &quot;$(TargetPath)&quot; --output &quot;$(TargetPath)$(XRTVMOutputSuffix)&quot; --key &quot;$(XRTVMKeyPath)&quot; --policy &quot;$(XRTVMPolicyJson)&quot;"
+      WorkingDirectory="$(ProjectDir)"
+      IgnoreExitCode="false"
+      ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="XRTVMCliOutput" />
+    </Exec>
+
+    <Message Text="[XRTVM] $(XRTVMCliOutput)" Importance="Normal" />
+    <Message Text="[XRTVM] Protection complete: $(TargetPath)$(XRTVMOutputSuffix)" Importance="High" />
+  </Target>
+
+  <!--
+    XrtvmValidate target: validates an existing .xvm container.
+    Run manually: msbuild /t:XrtvmValidate
+  -->
+  <Target Name="XrtvmValidate">
+    <Message Text="[XRTVM] Validating $(TargetPath)$(XRTVMOutputSuffix)" Importance="High" />
+    <Exec
+      Command="&quot;$(XRTVMCliPath)&quot; validate &quot;$(TargetPath)$(XRTVMOutputSuffix)&quot;"
+      WorkingDirectory="$(ProjectDir)"
+      ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="XRTVMValidateOutput" />
+    </Exec>
+    <Message Text="[XRTVM] $(XRTVMValidateOutput)" Importance="Normal" />
+  </Target>
+
+</Project>

@@ -1,0 +1,7 @@
+{
+  "name": "xrtvm-vs-extension-stub",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/extension.js",
+  "description": "Placeholder Visual Studio extension scaffold for XRTVM"
+}

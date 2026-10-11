@@ -1,0 +1,41 @@
+# Build output
+build/
+out/
+cmake-build-*/
+.vs/
+.vscode/
+*.user
+*.suo
+*.VC.db
+*.VC.VC.opendb
+*.pdb
+*.ilk
+*.obj
+*.pch
+*.idb
+*.tlog/
+*.lastbuildstate
+
+# CEF binaries are downloaded separately; don't commit the full distribution by default
+third_party/cef/
+downloads/
+.cache/
+
+# Generated packages
+dist/
+release/
+
+# Logs and local profiles
+*.log
+logs/
+profile/
+CEFProfile/
+userdata/
+cookies/
+*.dmp
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+secrets/

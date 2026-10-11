@@ -1,0 +1,44 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "vs2022-x64-sandbox",
+      "displayName": "VS2022 x64 Release (CEF sandbox via bootstrap.exe)",
+      "description": "Official CEF Windows sandbox packaging: client DLL loaded by bootstrap.exe, renamed to GrokDesktop.exe.",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "USE_SANDBOX": "ON"
+      }
+    },
+    {
+      "name": "vs2022-x64-nosandbox",
+      "displayName": "VS2022 x64 Release (no sandbox, single exe)",
+      "description": "Fallback configuration producing a plain GrokDesktop.exe without the CEF sandbox.",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build-nosandbox",
+      "cacheVariables": {
+        "USE_SANDBOX": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "release-sandbox",
+      "configurePreset": "vs2022-x64-sandbox",
+      "configuration": "Release"
+    },
+    {
+      "name": "release-nosandbox",
+      "configurePreset": "vs2022-x64-nosandbox",
+      "configuration": "Release"
+    }
+  ]
+}
